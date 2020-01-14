@@ -26,16 +26,23 @@ class Index extends Component {
         data.forEach((item, i) => {
             const cols = [];
             keys.forEach((key)=> {
-                let notId = key.indexOf('_');
+                let notId = key.indexOf('id') < 0;
                 if (notId) {
                     if (headers.length < keys.length - 1) {
                         headers.push(React.createElement('th', null, key));
                     }
-                    cols.push(React.createElement('td', null, data[i][key]));
+                    if (key === 'title') {
+                        const propsCol = {  style: { 'maxWidth' : '50%'}, onClick: () => { alert('open view!'); } };
+                        cols.push(React.createElement('td', propsCol, React.createElement('a', null, data[i][key])));
+                    } else {
+                        cols.push(React.createElement('td', null, data[i][key]));
+                    }
                 }
             });
+            cols.push(React.createElement('td', { onClick: () => { data.splice(i,1);  this.render(); }}, React.createElement('button', null, 'x')));
             rows.push(React.createElement('tr', null, cols));
         });
+        headers.push(React.createElement('th', null, 'Delete'));
         const head = React.createElement('thead', null, React.createElement('tr', null, headers));
         const body = React.createElement('tbody', null, rows);
         return React.createElement('table', null, [head, body]);

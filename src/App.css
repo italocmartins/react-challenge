@@ -42,4 +42,21 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
+  font-size: 12px;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* visited link */
+a:visited {
+  color: gray;
+}
+
+/* mouse over link */
+a:hover {
+  color: cornflowerblue;
 }
