@@ -42,6 +42,7 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
+  min-width: 200px;
   font-size: 12px;
 }
 
@@ -59,4 +60,49 @@ a:visited {
 /* mouse over link */
 a:hover {
   color: cornflowerblue;
+}
+
+.modal {
+  position: absolute;
+  background-color: white;
+  border-radius:10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.delete {
+  width: 25%;
+  height: 25%;
+  top: 25%;
+  left: 33%;
+}
+
+.view {
+  text-align: right;
+  width: 50%;
+  top: 10%;
+  left: 25%;
+}
+
+.modal-main {
+  padding: 10%;
+}
+
+.modal-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
 }

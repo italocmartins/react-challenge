@@ -1,7 +1,34 @@
 import React, { Component } from 'react';
+import DeleteDialog from "./DeleteDialog";
+import ViewDialog from "./ViewDialog";
 
 class Index extends Component {
     data = [];
+    keys = [];
+    state = { showDelete: false, showView: false, index: -1 };
+
+    showDeleteModal = (index) => {
+        this.setState({ showDelete: true, showView: false, index: index });
+    };
+
+    hideDeleteModal = (index) => {
+        this.setState({ showDelete: false, showView: false, index: -1 });
+        if (index >= 0) {
+            this.data.splice(index,1);
+        }
+    };
+
+    showViewModal = (index) => {
+        console.log(index);
+        this.setState({ showDelete: false, showView: true, index: index });
+    };
+
+    hideViewModal = (index) => {
+        this.setState({ showDelete: false, showView: false, index: -1 });
+        if (index >= 0) {
+            this.data.splice(index,1);
+        }
+    };
 
     constructor() {
         super();
@@ -17,44 +44,52 @@ class Index extends Component {
             {"_id": "2216f9" , "title":"Senior Software Developer C++ (m/w) Softwareentwickler C++ im Raum Frankfurt am Main","city":"Stuttgart","employer":"Ratbacher GmbH","requirements":["Abgeschlossenes Studium der (Wirtschafts-) Informatik oder eine Ausbildung mit vergleichbarem Hintergrund. Auch Quereinsteiger sind willkommen!","Mehrjährige Berufserfahrung in der Softwareentwicklung mit C++ sowie fundierte Kenntnisse mit Microsoft Technologien wie Visual Studio, OLE und COM","Gute Deutschkenntnisse sowie eine offene und freundliche Persönlichkeit runden Ihr Profil ab"],"tasks":["Onlinebewerbung","Kontaktanfrage"]},
             {"_id": "221b57" , "title":"Kfz-Mechaniker/-Mechatroniker (m/w) als Versuchsfachkraft (m/w) im Entwicklungsumfeld bei einem namhaften Automobilzulieferer","city":"Heilbronn (Neckar)","employer":"DIS AG Geschäftsbereich Office \u0026 Management","requirements":["Erfolgreich abgeschlossene technische Ausbildung, gerne als Kfz-Mechaniker, Kfz-Mechatroniker, Industriemechaniker, Feinwerkmechaniker o. v.","Erfahrung im Bereich der Montage","Gute MS Office-Kenntnisse, speziell Excel","Schichtbereitschaft","Selbständige, verantwortungsbewusste Arbeitsweise sowie Kommunikations- und Teamfähigkeit"],"tasks":["Arbeitsschritte gemäß des Versuchsauftrags planen","Montage bzw. Demontage von Getrieben sowie Getriebekomponenten","Dokumentation bei der Montage bzw. Demontage nach Vorgabe","EoL Abnahme der Getriebe nach Anweisung","Aufbau von Getrieben auf Prüfständen sowie Ein- und Ausbau von Getrieben in bzw. aus Versuchsfahrzeugen aller Art"]}
         ];
+        this.keys = Object.keys(this.data[0]);
     }
 
     createTable(data) {
-        const headers = []
+        const headers = [];
         const rows = [];
-        const keys = Object.keys(data[0]);
         data.forEach((item, i) => {
             const cols = [];
-            keys.forEach((key)=> {
-                let notId = key.indexOf('id') < 0;
+            this.keys.forEach((key)=> {
+                const notId = key.indexOf('id') < 0;
                 if (notId) {
-                    if (headers.length < keys.length - 1) {
+                    if (headers.length < this.keys.length - 1) {
                         headers.push(React.createElement('th', null, key));
                     }
                     if (key === 'title') {
-                        const propsCol = {  style: { 'maxWidth' : '50%'}, onClick: () => { alert('open view!'); } };
+                        const propsCol = {  style: { 'maxWidth' : '50%'}, onClick: () => { this.showViewModal(i) } };
                         cols.push(React.createElement('td', propsCol, React.createElement('a', null, data[i][key])));
                     } else {
                         cols.push(React.createElement('td', null, data[i][key]));
                     }
-                }
+               }
             });
-            cols.push(React.createElement('td', { onClick: () => { data.splice(i,1);  this.render(); }}, React.createElement('button', null, 'x')));
-            rows.push(React.createElement('tr', null, cols));
+            cols.push(React.createElement('td',
+                { onClick: () => {
+                        this.showDeleteModal(i);
+                    }
+                }
+            , React.createElement('button', null, 'x')));
+            rows.push(React.createElement('tr', { id: data[i]['_id'] }, cols));
         });
         headers.push(React.createElement('th', null, 'Delete'));
         const head = React.createElement('thead', null, React.createElement('tr', null, headers));
         const body = React.createElement('tbody', null, rows);
+
         return React.createElement('table', null, [head, body]);
     }
 
     getTable = (data) => {
+        console.log(this.data[this.state.index]);
         const table = this.createTable(data);
-        return table;
+        const deleteDialog = DeleteDialog({ show: this.state.showDelete, handleClose: this.hideDeleteModal, indexDelete: this.state.index });
+        const viewDialog = ViewDialog({ show: this.state.showView, handleClose: this.hideViewModal, viewItem: this.data[this.state.index], keys: this.keys });
+        return React.createElement('main', null, [ table, deleteDialog, viewDialog ]);
     }
 
     render() {
-        console.log(this.data);
         return this.getTable(this.data);
     }
 }
