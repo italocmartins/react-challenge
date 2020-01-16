@@ -20,7 +20,6 @@ class IndexTable extends Component {
     };
 
     showViewModal = (index) => {
-        console.log(index);
         this.setState({ showDelete: false, showView: true, index: index });
     };
 
@@ -62,7 +61,7 @@ class IndexTable extends Component {
                         this.showDeleteModal(i);
                     }
                 }
-            , React.createElement('button', null, 'x')));
+            , React.createElement('button', {style : { backgroundColor: 'red', borderColor: 'red', color: 'white'}}, 'x')));
             cols.push(React.createElement('td',
                 { onClick: () => {
                         this.selectionHandler(i);
@@ -80,7 +79,6 @@ class IndexTable extends Component {
     }
 
     getTable = (data) => {
-        console.log(this.data[this.state.index]);
         const table = this.createTable(data);
         const deleteDialog = DeleteDialog({ show: this.state.showDelete, handleClose: this.hideDeleteModal, indexDelete: this.state.index });
         const viewDialog = ViewDialog({ show: this.state.showView, handleClose: this.hideViewModal, viewItem: this.data[this.state.index], keys: this.keys });
@@ -88,6 +86,7 @@ class IndexTable extends Component {
     }
 
     render() {
+        console.log(this.data);
         return this.getTable(this.data);
     }
 }

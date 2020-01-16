@@ -5,7 +5,10 @@ const ViewDialog = ({ handleClose, show, viewItem, keys }) => {
     let labels = '';
     if(viewItem) {
         labels = keys.map((prop)=> {
-            return <div style={{'padding-bottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}> {viewItem[prop]}</span></div>
+            if (prop.indexOf('requirements') >= 0 || prop.indexOf('tasks') >= 0) {
+                return <div style={{'paddingBottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}><ul> {viewItem[prop].map((item)=> { return <li style={{float: 'left'}}>{item}</li> })}</ul></span></div>
+            }
+            return <div style={{'paddingBottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}> {viewItem[prop]}</span></div>
         });
     }
 

@@ -6,26 +6,26 @@ import Form from "./Components/Form";
 import history from './Components/History';
 
 class App extends Component {
-    state = { data: [], selectedElement: null, selectedIndex: -1};
+    state = { data: [], selectedItem: null, selectedIndex: -1};
     keys = [];
+    data = [];
     history;
 
     selectItem(index) {
-        const selectedObject = this.data[index];
-        this.setState({ data: this.data, selectedElement: selectedObject, selectedIndex: index});
-        history.push('/Form');
+        history.push('/Form', { data: this.data, selectedItem: this.data[index], selectedIndex: index });
     }
 
-    updateData(object, index) {
-        let currentData = this.state.data;
-        if (index < this.state.data.length) {
+    updateDataHandler(object, index) {
+        let currentData = this.data;
+        let state = null;
+        if (index >= 0) {
             currentData[index] = object;
-            this.setState({ data: currentData, selectedElement: null, selectedIndex: -1});
+            state = { data: currentData, selectedItem: null, selectedIndex: -1 };
         } else {
             currentData.push(object);
-            this.setState({ data: currentData, selectedElement: null, selectedIndex: -1});
+            state = { data: currentData, selectedItem: null, selectedIndex: -1 };
         }
-        history.push('/IndexTable')
+        history.push('/IndexTable', state);
     }
 
     constructor(props) {
@@ -122,14 +122,14 @@ class App extends Component {
                 <div>
                     <ul>
                         <li>
-                            <Link to="/IndexTable" >Table</Link>
+                            <Link to="/IndexTable" >Jobs List</Link>
                         </li>
                         <li>
-                            <Link to="/Form">Users</Link>
+                            <Link to="/Form">Create Job</Link>
                         </li>
                     </ul>
                     <Route path="/IndexTable" isAuthed={true} render={(...props) => <IndexTable {...props} data={this.state.data} selectionHandler={this.selectItem} keys={this.keys} />}/>
-                    <Route path="/Form" isAuthed={true} render={(...props) => <Form {...props} selectedItem={this.state.selectedElement} selectedIndex={this.state.selectedIndex} updateDataHandler={this.updateData} keys={this.keys} />} />
+                    <Route path="/Form" isAuthed={true} render={(...props) => <Form {...props} selectedItem={this.state.selectedItem} selectedIndex={this.state.selectedIndex} updateDataHandler={this.updateDataHandler} keys={this.keys} />} />
                 </div>
             </Router>
         );

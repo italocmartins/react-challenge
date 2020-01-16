@@ -8,7 +8,7 @@ const DeleteDialog = ({ handleClose, show, indexDelete }) => {
                 <button className="modal-button" onClick={handleClose}>X</button>
                 Do you really want to delete this row?
                 <br/>
-                <button  onClick={ ()=> {
+                <button className="delete-button" onClick={ ()=> {
                     handleClose(indexDelete);
                 }}>Yes</button>
             </section>
