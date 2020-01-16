@@ -5,7 +5,7 @@ const ViewDialog = ({ handleClose, show, viewItem, keys }) => {
     let labels = '';
     if(viewItem) {
         labels = keys.map((prop)=> {
-            return <div><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}> {viewItem[prop]}</span></div>
+            return <div style={{'padding-bottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}> {viewItem[prop]}</span></div>
         });
     }
 

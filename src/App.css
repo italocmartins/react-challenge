@@ -42,7 +42,7 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
-  min-width: 200px;
+  min-width: 30px;
   font-size: 12px;
 }
 
@@ -105,4 +105,10 @@ a:hover {
 
 .display-none {
   display: none;
+}
+
+.edit-icon {
+  background-image : url(./edit.png);
+  height: 30px;
+  width: 30px;
 }
