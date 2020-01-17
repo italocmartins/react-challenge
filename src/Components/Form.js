@@ -69,14 +69,14 @@ class Form extends React.Component {
     };
 
     buildForm() {
-        const usrForm = (<ul key={Math.random() * Math.random()} className="form-style-1"> {Object.keys(this.formFields).map(field => {
+        const usrForm = (<ul className="form-style-1"> {Object.keys(this.formFields).map(field => {
             this.formFields[field].value = this.state[field];
             switch (this.formFields[field].type) {
                 case 'text':
                     return (
-                        <li key={Math.random() * Math.random()}>
+                        <li>
                             <label> {field}*</label>
-                            <input type={
+                            <input key={['formField',this.formFields[field]]} type={
                                 this.formFields[field].type
                             }
                                       value={
@@ -90,7 +90,7 @@ class Form extends React.Component {
                         </li>
                     );
                 case 'text-area':
-                    return (<li key={Math.random() * Math.random()}>
+                    return (<li >
                         <label> {field}*</label>
                         <textarea type={
                         this.formFields[field].type
