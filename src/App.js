@@ -12,19 +12,20 @@ class App extends Component {
     history;
 
     selectItem(index) {
-        history.push('/Form', { data: this.data, selectedItem: this.data[index], selectedIndex: index });
+        const selectItem = this.data[index];
+        history.push('/Form', { data: this.data, selectedItem: selectItem, selectedIndex: index });
     }
 
-    updateDataHandler(object, index) {
-        let currentData = this.data;
+    updateDataHandler(object) {
+        let currentData = this.state.data;
         let state = null;
-        if (index >= 0) {
-            currentData[index] = object;
-            state = { data: currentData, selectedItem: null, selectedIndex: -1 };
+        const found = currentData.findIndex(dataItem => object._id === dataItem._id);
+        if (found >= 0) {
+            currentData[found] = object;
         } else {
             currentData.push(object);
-            state = { data: currentData, selectedItem: null, selectedIndex: -1 };
         }
+        this.setState({data: currentData});
         history.push('/IndexTable', state);
     }
 
@@ -129,7 +130,7 @@ class App extends Component {
                         </li>
                     </ul>
                     <Route path="/IndexTable" isAuthed={true} render={(...props) => <IndexTable {...props} data={this.state.data} selectionHandler={this.selectItem} keys={this.keys} />}/>
-                    <Route path="/Form" isAuthed={true} render={(...props) => <Form {...props} selectedItem={this.state.selectedItem} selectedIndex={this.state.selectedIndex} updateDataHandler={this.updateDataHandler} keys={this.keys} />} />
+                    <Route path="/Form" isAuthed={true} render={(...props) => <Form {...props} selectedItem={this.state.selectedItem} selectedIndex={this.state.selectedIndex} data={this.state.data} updateDataHandler={this.updateDataHandler} keys={this.keys} />} />
                 </div>
             </Router>
         );

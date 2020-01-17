@@ -46,36 +46,38 @@ class IndexTable extends Component {
                 const notId = key.indexOf('id') < 0;
                 if (notId) {
                     if (headers.length < this.keys.length - 1) {
-                        headers.push(React.createElement('th', null, key));
+                        headers.push(React.createElement('th', {key: Math.random() * Math.random()}, key));
                     }
                     if (key === 'title') {
-                        const propsCol = {  style: { 'maxWidth' : '50%'}, onClick: () => { this.showViewModal(i) } };
+                        const propsCol = { key: (i+1) * Math.random(),  style: { 'maxWidth' : '50%'}, onClick: () => { this.showViewModal(i) } };
                         cols.push(React.createElement('td', propsCol, React.createElement('a', null, data[i][key])));
                     } else {
-                        cols.push(React.createElement('td', null, data[i][key]));
+                        cols.push(React.createElement('td', {key: (i+1) * Math.random()}, data[i][key]));
                     }
                }
             });
             cols.push(React.createElement('td',
                 { onClick: () => {
                         this.showDeleteModal(i);
-                    }
+                    },
+                    key: (i+1) * Math.random()
                 }
             , React.createElement('button', {style : { backgroundColor: 'red', borderColor: 'red', color: 'white'}}, 'x')));
             cols.push(React.createElement('td',
                 { onClick: () => {
                         this.selectionHandler(i);
-                    }
+                    },
+                    key: (i+1) * Math.random()
                 }
                 , React.createElement('div', { className: 'edit-icon' })));
-            rows.push(React.createElement('tr', { id: data[i]['_id'] }, cols));
+            rows.push(React.createElement('tr', { key: data[i]['_id'] }, cols));
         });
-        headers.push(React.createElement('th', null, 'Delete'));
-        headers.push(React.createElement('th', null, 'Edit'));
-        const head = React.createElement('thead', null, React.createElement('tr', null, headers));
-        const body = React.createElement('tbody', null, rows);
+        headers.push(React.createElement('th', {key: Math.random() * Math.random()}, 'Delete'));
+        headers.push(React.createElement('th', {key: Math.random() * Math.random()}, 'Edit'));
+        const head = React.createElement('thead', {key: Math.random() * Math.random()}, React.createElement('tr', null, headers));
+        const body = React.createElement('tbody', {key: Math.random() * Math.random()}, rows);
 
-        return React.createElement('table', null, [head, body]);
+        return React.createElement('table', {key: Math.random() * Math.random()}, [head, body]);
     }
 
     getTable = (data) => {
@@ -86,7 +88,6 @@ class IndexTable extends Component {
     }
 
     render() {
-        console.log(this.data);
         return this.getTable(this.data);
     }
 }
