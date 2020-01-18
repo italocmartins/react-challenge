@@ -26,8 +26,8 @@ class Form extends React.Component {
             title : stateProp.selectedItem?.title ,
             city : stateProp.selectedItem?.city ,
             employer : stateProp.selectedItem?.employer,
-            requirements: stateProp.selectedItem?.requirements,
-            tasks: stateProp.selectedItem?.tasks,
+            requirements: stateProp.selectedItem?.requirements.join('\n'),
+            tasks: stateProp.selectedItem?.tasks.join('\n'),
             selectedItem: stateProp?.selectedItem,
             data: stateProp.data,
             usrForm: null
@@ -158,8 +158,8 @@ class Form extends React.Component {
                         title : this.state.title ,
                         city : this.state.city ,
                         employer : this.state.employer,
-                        requirements:requirements.split("."),
-                        tasks: tasks.split("."),
+                        requirements:requirements.trim().split("\n"),
+                        tasks: tasks.trim().split("\n"),
                     };
 
                     this.updateDataHandler(selectObject);

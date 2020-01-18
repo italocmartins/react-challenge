@@ -6,7 +6,10 @@ const ViewDialog = ({ handleClose, show, viewItem, keys }) => {
     if(viewItem) {
         labels = keys.map((prop)=> {
             if (prop.indexOf('requirements') >= 0 || prop.indexOf('tasks') >= 0) {
-                return <div key={Math.random() * Math.random()} style={{'paddingBottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}><ul> {viewItem[prop].map((item)=> { return <li key={Math.random() * Math.random()} style={{float: 'left'}}>{item}</li> })}</ul></span></div>
+                if (!Array.isArray(viewItem[prop])) {
+                    viewItem[prop] = [viewItem[prop]];
+                }
+                return <div key={Math.random() * Math.random()} style={{'paddingBottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}><ul className="list-display"> {viewItem[prop].map((item)=> { return <li key={Math.random() * Math.random()} style={{float: 'left'}}>{item}</li> })}</ul></span></div>
             }
             return <div key={Math.random() * Math.random()} style={{'paddingBottom': '3%'}}><label style={{'float':'left'}}><b>{prop}: </b></label> <span style={{'float':'right'}}> {viewItem[prop]}</span></div>
         });

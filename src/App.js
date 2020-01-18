@@ -121,11 +121,11 @@ class App extends Component {
         return (
             <Router history={history}>
                 <div>
-                    <ul>
-                        <li>
+                    <ul className="top-bar">
+                        <li className="top-bar-item">
                             <Link to="/IndexTable" >Jobs List</Link>
                         </li>
-                        <li>
+                        <li className="top-bar-item">
                             <Link to="/Form">Create Job</Link>
                         </li>
                     </ul>
